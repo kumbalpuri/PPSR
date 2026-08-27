@@ -70,7 +70,7 @@ export default function App() {
   const [inspectPpsr, setInspectPpsr] = useState<PpsrReport | null>(null);
 
   // Submenu Quick triggers
-  const [activePpsrTab, setActivePpsrTab] = useState<'register' | 'meeting' | 'initiate' | 'cft-awards'>('register');
+  const [activePpsrTab, setActivePpsrTab] = useState<'initiate' | 'meeting' | 'cft-awards' | 'register'>('initiate');
   const [initialRedFlagAction, setInitialRedFlagAction] = useState<string | null>(null);
   const [initialFiveSAction, setInitialFiveSAction] = useState<string | null>(null);
   const [initialSafetyAction, setInitialSafetyAction] = useState<string | null>(null);

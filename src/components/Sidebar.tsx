@@ -57,7 +57,7 @@ export default function Sidebar({
   setActiveModule,
   activeTab,
   setActiveTab,
-  activePpsrTab = 'board',
+  activePpsrTab = 'initiate',
   setActivePpsrTab,
   persona,
   setPersona,
@@ -529,15 +529,15 @@ export default function Sidebar({
             {isExpanded && expandedMenus.ppsr && (
               <div className="pl-7 pr-1 py-1 space-y-1 border-l-2 border-slate-900 ml-5 animate-fade-in">
                 <button
-                  onClick={() => selectSubTab('ppsr', 'register', 'register')}
+                  onClick={() => selectSubTab('ppsr', 'initiate', 'initiate-ppsr')}
                   className={`w-full flex items-center space-x-2 px-2.5 py-1.5 rounded-lg text-left text-[11px] font-semibold transition ${
-                    activeModule === 'ppsr' && activePpsrTab === 'register'
-                      ? 'text-blue-300 font-bold bg-slate-900/80 shadow-xs'
+                    activeModule === 'ppsr' && activePpsrTab === 'initiate'
+                      ? 'text-violet-300 font-bold bg-slate-900/80 shadow-xs'
                       : 'text-slate-400 hover:text-violet-300 hover:bg-slate-900/40'
                   }`}
                 >
-                  <ClipboardList className="w-3 h-3 shrink-0 text-blue-400" />
-                  <span>📋 PPSR Register</span>
+                  <PlusCircle className="w-3 h-3 shrink-0 text-violet-400" />
+                  <span>🚀 Initiate New PPSR</span>
                 </button>
                 <button
                   onClick={() => selectSubTab('ppsr', 'meeting', 'meeting')}
@@ -551,17 +551,6 @@ export default function Sidebar({
                   <span>👥 Committee Review</span>
                 </button>
                 <button
-                  onClick={() => selectSubTab('ppsr', 'initiate', 'initiate-ppsr')}
-                  className={`w-full flex items-center space-x-2 px-2.5 py-1.5 rounded-lg text-left text-[11px] font-semibold transition ${
-                    activeModule === 'ppsr' && activePpsrTab === 'initiate'
-                      ? 'text-violet-300 font-bold bg-slate-900/80 shadow-xs'
-                      : 'text-slate-400 hover:text-violet-300 hover:bg-slate-900/40'
-                  }`}
-                >
-                  <PlusCircle className="w-3 h-3 shrink-0 text-violet-400" />
-                  <span>🚀 Initiate New PPSR</span>
-                </button>
-                <button
                   onClick={() => selectSubTab('ppsr', 'cft-awards', 'cft-awards')}
                   className={`w-full flex items-center space-x-2 px-2.5 py-1.5 rounded-lg text-left text-[11px] font-semibold transition ${
                     activeModule === 'ppsr' && activePpsrTab === 'cft-awards'
@@ -570,7 +559,18 @@ export default function Sidebar({
                   }`}
                 >
                   <Trophy className="w-3 h-3 shrink-0 text-amber-400" />
-                  <span>🏆 CFT Best Awards</span>
+                  <span>🏆 Monthly Awards</span>
+                </button>
+                <button
+                  onClick={() => selectSubTab('ppsr', 'register', 'register')}
+                  className={`w-full flex items-center space-x-2 px-2.5 py-1.5 rounded-lg text-left text-[11px] font-semibold transition ${
+                    activeModule === 'ppsr' && activePpsrTab === 'register'
+                      ? 'text-blue-300 font-bold bg-slate-900/80 shadow-xs'
+                      : 'text-slate-400 hover:text-violet-300 hover:bg-slate-900/40'
+                  }`}
+                >
+                  <ClipboardList className="w-3 h-3 shrink-0 text-blue-400" />
+                  <span>📋 PPSR Register</span>
                 </button>
               </div>
             )}

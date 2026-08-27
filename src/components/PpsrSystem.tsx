@@ -41,7 +41,10 @@ import {
   MessageSquare,
   Tv,
   Camera,
-  Upload
+  Upload,
+  PlusCircle,
+  ClipboardList,
+  Trophy
 } from 'lucide-react';
 import { PpsrMeetingLog } from '../types';
 
@@ -60,7 +63,7 @@ interface PpsrSystemProps {
   onAddMeeting?: (data: Partial<PpsrMeetingLog>) => void;
 }
 
-type PpsrSubTab = 'register' | 'meeting' | 'initiate' | 'cft-awards';
+type PpsrSubTab = 'initiate' | 'meeting' | 'cft-awards' | 'register';
 
 export default function PpsrSystem({
   reports,
@@ -77,7 +80,7 @@ export default function PpsrSystem({
   onAddMeeting
 }: PpsrSystemProps) {
   
-  const [internalTab, setInternalTab] = useState<PpsrSubTab>('register');
+  const [internalTab, setInternalTab] = useState<PpsrSubTab>('initiate');
   const currentTab = activePpsrTab || internalTab;
 
   const handleSetTab = (tab: PpsrSubTab) => {
@@ -588,7 +591,85 @@ export default function PpsrSystem({
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-2 space-y-3.5" id="ppsr-system-hub">
       
-      {/* 2. Render Active Tab (Controlled via left sidebar) */}
+      {/* PPSR Workflow Sub-Tabs Navigation */}
+      <div className="bg-white border border-slate-200/80 rounded-xl p-1 shadow-2xs flex items-center justify-between gap-1 overflow-x-auto select-none">
+        <div className="flex items-center gap-1 min-w-max">
+          {/* 1. Initiate PPSR */}
+          <button
+            id="tab-ppsr-initiate"
+            onClick={() => handleSetTab('initiate')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              currentTab === 'initiate'
+                ? 'bg-violet-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <PlusCircle className="w-3.5 h-3.5 shrink-0 text-violet-300" />
+            <span>1. Initiate PPSR</span>
+          </button>
+
+          {/* 2. Committee Review */}
+          <button
+            id="tab-ppsr-meeting"
+            onClick={() => handleSetTab('meeting')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              currentTab === 'meeting'
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Users className="w-3.5 h-3.5 shrink-0 text-emerald-300" />
+            <span>2. Committee Review</span>
+            {meetings && meetings.length > 0 && (
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                currentTab === 'meeting' ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-200 text-slate-700'
+              }`}>
+                {meetings.length}
+              </span>
+            )}
+          </button>
+
+          {/* 3. Monthly Awards */}
+          <button
+            id="tab-ppsr-awards"
+            onClick={() => handleSetTab('cft-awards')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              currentTab === 'cft-awards'
+                ? 'bg-amber-500 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Trophy className="w-3.5 h-3.5 shrink-0 text-amber-200" />
+            <span>3. Monthly Awards</span>
+          </button>
+
+          {/* 4. PPSR Register */}
+          <button
+            id="tab-ppsr-register"
+            onClick={() => handleSetTab('register')}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              currentTab === 'register'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <ClipboardList className="w-3.5 h-3.5 shrink-0 text-blue-300" />
+            <span>4. PPSR Register</span>
+            <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+              currentTab === 'register' ? 'bg-blue-800 text-blue-100' : 'bg-slate-200 text-slate-700'
+            }`}>
+              {reports.length}
+            </span>
+          </button>
+        </div>
+
+        <div className="hidden lg:flex items-center space-x-2 px-3 text-[11px] font-mono text-slate-400">
+          <Compass className="w-3.5 h-3.5 text-violet-500" />
+          <span>8D Problem Solving Lifecycle</span>
+        </div>
+      </div>
+      
+      {/* 2. Render Active Tab */}
 
       {currentTab === 'cft-awards' && (
         <PpsrMonthlyAwards
@@ -725,29 +806,31 @@ export default function PpsrSystem({
 
       {/* SUB-TAB 3: LOG NEW BE FORM */}
       {currentTab === 'initiate' && (
-        <form onSubmit={handleFormSubmit} className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-xs space-y-6 max-w-4xl mx-auto text-left" id="ppsr-initiate-form-wizard">
+        <form onSubmit={handleFormSubmit} className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-2xs space-y-4 max-w-4xl mx-auto text-left" id="ppsr-initiate-form-wizard">
           
           {/* Form Header */}
-          <div className="border-b pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div>
-              <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
-                <span>🧠 Initiate Practical Problem Solving Report (PPSR)</span>
-              </h3>
-              <p className="text-xs text-slate-400 font-medium">Step-by-step BE problem solving wizard. Complete all steps to compile the final paper standard.</p>
+          <div className="border-b pb-2 flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-black text-slate-800 uppercase tracking-tight">
+                🧠 Initiate PPSR Report
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
+                8D Problem Solving Wizard
+              </span>
             </div>
-            <div className="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg text-[10px] font-black uppercase font-mono tracking-wider shrink-0">
-              Progress: Step {formStep} of 5
+            <div className="bg-violet-50 text-violet-700 border border-violet-200 px-2 py-0.5 rounded text-[10px] font-black uppercase font-mono tracking-wider shrink-0">
+              Step {formStep} / 5
             </div>
           </div>
 
           {/* Stepper Progress Bar */}
-          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex items-center justify-between gap-4 overflow-x-auto select-none">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-2 flex items-center justify-between gap-2 overflow-x-auto select-none">
             {[
-              { num: 1, title: "1. Problem & Facts", desc: "Symptoms & IS/IS-NOT" },
-              { num: 2, title: "2. Containment", desc: "Short-term protection" },
-              { num: 3, title: "3. Root Causes", desc: "Ishikawa & 5-Whys" },
-              { num: 4, title: "4. Corrective Plans", desc: "Fixes & Evidence" },
-              { num: 5, title: "5. Standardization", desc: "Control plans & Sign-off" }
+              { num: 1, title: "1. Problem & Facts", desc: "Symptoms & IS/NOT" },
+              { num: 2, title: "2. Containment", desc: "Short-term" },
+              { num: 3, title: "3. Root Causes", desc: "Ishikawa & PSQ" },
+              { num: 4, title: "4. Action Plan", desc: "Fixes & Evidence" },
+              { num: 5, title: "5. Standardization", desc: "Control & Sign-off" }
             ].map((step) => {
               const isPassed = formStep > step.num;
               const isActive = formStep === step.num;
@@ -755,11 +838,11 @@ export default function PpsrSystem({
                 <div 
                   key={step.num} 
                   onClick={() => setFormStep(step.num)}
-                  className="flex items-center space-x-2 min-w-[145px] shrink-0 cursor-pointer hover:opacity-95"
+                  className="flex items-center space-x-1.5 min-w-[120px] shrink-0 cursor-pointer hover:opacity-95"
                 >
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black transition-all ${
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black transition-all ${
                     isPassed ? 'bg-emerald-600 text-white' :
-                    isActive ? 'bg-violet-600 text-white shadow-md shadow-violet-200 ring-2 ring-violet-100' :
+                    isActive ? 'bg-violet-600 text-white shadow-xs ring-2 ring-violet-200' :
                     'bg-slate-200 text-slate-500'
                   }`}>
                     {isPassed ? "✓" : step.num}
@@ -770,7 +853,6 @@ export default function PpsrSystem({
                     }`}>
                       {step.title}
                     </div>
-                    <div className="text-[8px] font-mono text-slate-400 mt-0.5 leading-none">{step.desc}</div>
                   </div>
                 </div>
               );
@@ -1321,16 +1403,7 @@ export default function PpsrSystem({
 
                 {/* PSQ Tree Editor */}
                 {(causeLocalizationApproach === 'psq' || causeLocalizationApproach === 'both') && (
-                  <div className="pt-2">
-                    <div className="mb-3 flex items-center justify-between">
-                      <h5 className="text-[11px] font-black uppercase tracking-wider text-emerald-800 font-mono flex items-center gap-2">
-                        <span>🌳 PSQ Project Definition & Elimination Strategy Tree (Interactive Editor)</span>
-                      </h5>
-                      <span className="text-[10px] text-slate-500 font-mono">
-                        Click on node status badges to cycle [Active → Eliminated ❌ → Target Big X 🎯]
-                      </span>
-                    </div>
-
+                  <div className="pt-1">
                     <PsqEliminationTree 
                       data={psqTreeData}
                       onChange={setPsqTreeData}

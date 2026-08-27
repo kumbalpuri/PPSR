@@ -27,36 +27,33 @@ export const PsqGraphicTree: React.FC<PsqGraphicTreeProps> = ({
   const targetPart = childParts.find(p => p.isDefective || p.status === 'target');
 
   return (
-    <div className="bg-white border-2 border-slate-200 rounded-3xl p-5 sm:p-6 shadow-xs space-y-6 text-slate-900 font-sans" id="psq-graphic-elimination-tree">
+    <div className="bg-white border-2 border-slate-200 rounded-2xl p-3.5 sm:p-4 shadow-2xs space-y-3.5 text-slate-900 font-sans" id="psq-graphic-elimination-tree">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 gap-3">
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-slate-950 text-white flex items-center justify-center font-bold shadow-xs">
-            <GitFork className="w-5 h-5 text-emerald-400" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-200 gap-2">
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 rounded-lg bg-slate-950 text-white flex items-center justify-center font-bold shadow-2xs">
+            <GitFork className="w-3.5 h-3.5 text-emerald-400" />
           </div>
           <div>
-            <h3 className="text-sm sm:text-base font-black uppercase tracking-wider font-mono text-slate-900 flex items-center gap-2">
-              <span>PSQ Elimination Hierarchy Tree</span>
+            <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider font-mono text-slate-900 flex items-center gap-1.5">
+              <span>PSQ Elimination Tree Canvas</span>
               {isEditable && (
-                <span className="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] font-bold px-2 py-0.5 rounded">
-                  Interactive (Click any node to toggle)
+                <span className="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[9px] font-bold px-1.5 py-0.2 rounded">
+                  Interactive
                 </span>
               )}
             </h3>
-            <p className="text-xs text-slate-500 font-mono">
-              Pure White High-Contrast Canvas &bull; Mone(Y) &rarr; &Delta;M &rarr; &Delta;P &rarr; Parts &rarr; Red X
-            </p>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-          <span className="bg-sky-50 text-sky-900 border-2 border-sky-300 px-2.5 py-1 rounded-xl font-bold text-[10px] flex items-center gap-1">
-            <span className="text-sky-600 font-black">/</span> Diagonal Slash = Eliminated
+        <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+          <span className="bg-sky-50 text-sky-900 border border-sky-300 px-2 py-0.5 rounded-lg font-bold text-[9px] flex items-center gap-1">
+            <span className="text-sky-600 font-black">/</span> Slash = Eliminated
           </span>
-          <span className="bg-amber-100 text-amber-950 border-2 border-amber-400 px-2.5 py-1 rounded-xl font-bold text-[10px] flex items-center gap-1">
-            <Flame className="w-3 h-3 text-amber-600" /> Gold = Red X Root Cause
+          <span className="bg-amber-100 text-amber-950 border border-amber-400 px-2 py-0.5 rounded-lg font-bold text-[9px] flex items-center gap-1">
+            <Flame className="w-2.5 h-2.5 text-amber-600" /> Gold = Red X
           </span>
         </div>
       </div>
@@ -64,7 +61,7 @@ export const PsqGraphicTree: React.FC<PsqGraphicTreeProps> = ({
       {/* ========================================================================= */}
       {/* TREE PURE WHITE CANVAS CONTAINER */}
       {/* ========================================================================= */}
-      <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 sm:p-8 flex flex-col items-center overflow-x-auto min-w-[340px] select-none">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 flex flex-col items-center overflow-x-auto min-w-[320px] select-none">
         
         {/* LEVEL 0: ROOT Mone(Y) */}
         <div className="flex flex-col items-center">

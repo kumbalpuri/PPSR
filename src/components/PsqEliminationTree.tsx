@@ -576,148 +576,156 @@ export const PsqEliminationTree: React.FC<PsqEliminationTreeProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* TOP CONTROL BAR & VIEW MODES */}
+      {/* ULTRA-COMPACT TOP CONTROL BAR & VIEW MODES */}
       {/* ========================================================================= */}
-      <div className="bg-slate-950 text-white rounded-3xl p-5 shadow-lg border border-slate-800 space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          
-          {/* Title & Badge */}
-          <div className="flex items-center space-x-3">
-            <div className="p-3 bg-emerald-500/20 text-emerald-400 rounded-2xl border border-emerald-500/30">
-              <GitFork className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase font-mono px-2 py-0.5 rounded-md">
-                  Shainin Component Search
-                </span>
-                <span className="text-xs text-slate-400 font-mono hidden sm:inline font-bold">
-                  PSQ Elimination Hierarchy
-                </span>
-              </div>
-              <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white mt-0.5">
-                Physical Swap &amp; Root Cause Elimination Studio
-              </h3>
-            </div>
+      <div className="bg-slate-950 text-white rounded-2xl p-2.5 sm:p-3 shadow-md border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        {/* Left: Compact Title & Status */}
+        <div className="flex items-center space-x-2.5 min-w-0">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 shrink-0">
+            <GitFork className="w-4 h-4" />
           </div>
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
+            <h3 className="text-xs sm:text-sm font-black uppercase tracking-tight text-white truncate">
+              PSQ Swap &amp; Elimination Studio
+            </h3>
+            <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-black uppercase font-mono px-1.5 py-0.5 rounded">
+              Shainin
+            </span>
+            {targetPart ? (
+              <span className="bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[9px] font-black font-mono px-1.5 py-0.5 rounded flex items-center gap-1 animate-pulse">
+                <Target className="w-2.5 h-2.5" /> Red X: {targetPart.partName}
+              </span>
+            ) : isGaugeGood && isProcessGood ? (
+              <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold font-mono px-1.5 py-0.5 rounded">
+                ΔM &amp; ΔP OK
+              </span>
+            ) : (
+              <span className="bg-slate-800 text-slate-400 text-[9px] font-mono px-1.5 py-0.5 rounded">
+                Testing
+              </span>
+            )}
+          </div>
+        </div>
 
-          {/* View Mode Switcher */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-slate-900 p-1.5 rounded-2xl border border-slate-800 self-start lg:self-auto">
+        {/* Right: Compact View Switcher, Presets & Sync */}
+        <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+          {/* View Switcher Pills */}
+          <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
             <button
               type="button"
               onClick={() => setViewMode('studio')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition flex items-center space-x-1.5 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition flex items-center space-x-1 cursor-pointer ${
                 viewMode === 'studio'
-                  ? 'bg-emerald-600 text-white shadow-md'
+                  ? 'bg-emerald-600 text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
+              title="Step-by-step card bench"
             >
-              <Activity className="w-3.5 h-3.5" />
-              <span>🧪 Swap Studio</span>
+              <Activity className="w-3 h-3" />
+              <span>Studio</span>
             </button>
 
             <button
               type="button"
               onClick={() => setViewMode('tree_diagram')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition flex items-center space-x-1.5 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition flex items-center space-x-1 cursor-pointer ${
                 viewMode === 'tree_diagram'
-                  ? 'bg-indigo-600 text-white shadow-md'
+                  ? 'bg-indigo-600 text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
+              title="Interactive Graphic Tree"
             >
-              <GitFork className="w-3.5 h-3.5" />
-              <span>🌳 Live Graphic Tree</span>
+              <GitFork className="w-3 h-3" />
+              <span>Tree</span>
             </button>
 
             <button
               type="button"
               onClick={() => setViewMode('split')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition flex items-center space-x-1.5 cursor-pointer hidden md:flex ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition hidden sm:flex items-center space-x-1 cursor-pointer ${
                 viewMode === 'split'
-                  ? 'bg-violet-600 text-white shadow-md'
+                  ? 'bg-violet-600 text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
+              title="Side-by-side cards and diagram"
             >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>⚡ Dual Split View</span>
+              <SlidersHorizontal className="w-3 h-3" />
+              <span>Split</span>
             </button>
 
             <button
               type="button"
               onClick={() => setViewMode('standard_worksheet')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition flex items-center space-x-1.5 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition flex items-center space-x-1 cursor-pointer ${
                 viewMode === 'standard_worksheet'
-                  ? 'bg-amber-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
+              title="Standard Worksheet Table"
             >
-              <Table className="w-3.5 h-3.5" />
-              <span>📊 Standard Worksheet</span>
+              <Table className="w-3 h-3" />
+              <span>Worksheet</span>
             </button>
           </div>
-        </div>
 
-        {/* Preset Selector & Quick Action Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-800/80 text-xs font-mono">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-slate-400 font-bold flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Presets:
-            </span>
+          {/* Quick Preset Mini-Buttons */}
+          <div className="hidden lg:flex items-center gap-1 bg-slate-900/80 px-1.5 py-1 rounded-xl border border-slate-800 text-[10px] font-mono">
+            <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
             {PRESET_EXAMPLES.map((preset) => (
               <button
                 key={preset.name}
                 type="button"
                 onClick={() => handleUpdateSwapData(preset.data)}
-                className="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer hover:border-emerald-400"
+                className="hover:bg-slate-800 text-slate-300 hover:text-white px-1.5 py-0.5 rounded transition cursor-pointer"
                 title={preset.desc}
               >
-                {preset.name.split(' ')[0]} {preset.name.split(' ')[1]}
+                {preset.name.split(' ')[0]}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            {standardWorksheet.length > 0 && (
-              <button
-                type="button"
-                onClick={() => handleAutoGenerateFromWorksheet()}
-                className="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 px-3 py-1 rounded-xl text-[11px] font-bold flex items-center space-x-1 transition cursor-pointer"
-              >
-                <RefreshCw className="w-3 h-3 text-emerald-400" />
-                <span>Sync from Worksheet</span>
-              </button>
-            )}
-          </div>
+          {standardWorksheet.length > 0 && (
+            <button
+              type="button"
+              onClick={() => handleAutoGenerateFromWorksheet()}
+              className="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 px-2 py-1 rounded-xl text-[10px] font-bold font-mono flex items-center space-x-1 transition cursor-pointer"
+              title="Sync from Standard Worksheet"
+            >
+              <RefreshCw className="w-2.5 h-2.5 text-emerald-400" />
+              <span>Sync</span>
+            </button>
+          )}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* METHODOLOGY VERDICT SUMMARY BANNER */}
+      {/* ULTRA-SLIM METHODOLOGY VERDICT RIBBON */}
       {/* ========================================================================= */}
-      <div className="bg-white border-2 border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs font-mono text-xs">
-        <div className="flex items-center space-x-3">
-          <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shrink-0 ${
-            targetPart ? 'bg-amber-100 text-amber-950 border border-amber-300' : 'bg-slate-100 text-slate-700'
-          }`}>
-            <Target className={`w-4 h-4 ${targetPart ? 'text-amber-600' : 'text-slate-500'}`} />
-          </div>
-          <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Current Shainin PSQ Verdict</span>
-            <p className="text-slate-800 font-bold leading-tight mt-0.5">
-              {isGaugeGood ? '✅ Gauge OK (ΔM Eliminated)' : '⏳ Testing Gauge'} &rarr;{' '}
-              {isProcessGood ? '✅ Assembly OK (Process Eliminated)' : '⏳ Testing Assembly'} &rarr;{' '}
-              {targetPart ? (
-                <span className="text-rose-700 font-black">🎯 Red X: {targetPart.partName}</span>
-              ) : (
-                <span className="text-slate-500">Child Parts Swapping in Progress</span>
-              )}
-            </p>
-          </div>
+      <div className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 shadow-2xs font-mono text-[11px] text-slate-700">
+        <div className="flex items-center space-x-2 flex-wrap">
+          <span className="font-bold text-slate-400 uppercase text-[9px] flex items-center gap-1">
+            <Target className="w-3 h-3 text-slate-500" /> Shainin Flow:
+          </span>
+          <span className={isGaugeGood ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
+            {isGaugeGood ? '✅ ΔM Eliminated' : '⏳ ΔM Gauge'}
+          </span>
+          <span className="text-slate-300">&rarr;</span>
+          <span className={isProcessGood ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
+            {isProcessGood ? '✅ ΔP Eliminated' : '⏳ ΔP Assembly'}
+          </span>
+          <span className="text-slate-300">&rarr;</span>
+          {targetPart ? (
+            <span className="text-rose-700 font-black bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
+              🎯 Red X: {targetPart.partName}
+            </span>
+          ) : (
+            <span className="text-slate-500">Child Parts Testing</span>
+          )}
         </div>
 
         {targetPart && (
-          <span className="bg-amber-100 text-amber-950 border border-amber-400 px-3 py-1 rounded-xl text-[11px] font-black self-start sm:self-auto uppercase">
-            Red X Isolated
+          <span className="text-[10px] text-emerald-800 font-bold bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded">
+            Stage 2 Complete
           </span>
         )}
       </div>
